@@ -2,6 +2,20 @@ const User = require("../models/User");
 const Spot = require("../models/Spot");
 
 class SpotController {
+  async index(req, res) {
+    try {
+      const { tech } = req.query;
+
+      const spots = await Spot.find({ techs: tech });
+
+      return res.status(200).json(spots);
+    } catch (err) {
+      return res.status(400).json({
+        message: "Operação indisponível"
+      });
+    }
+  }
+
   async store(req, res) {
     try {
       const { filename } = req.file;
